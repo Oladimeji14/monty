@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 /* Declare op_toks without initialization */
-char **op_toks;
+
 /**
  * monty_push - Pushes an element onto the stack.
  * @stack: Pointer to the top of the stack.
