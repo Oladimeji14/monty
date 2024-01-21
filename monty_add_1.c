@@ -12,21 +12,21 @@ void my_push(my_stack_t **my_stack, unsigned int line_number)
     int i;
 
     new_node = malloc(sizeof(my_stack_t));
-    if (!new_node || !op_toks[1])
+    if (!new_node || !my_op_toks[1])
     {
         set_my_op_tok_error(!new_node ? my_malloc_error() : my_no_int_error(line_number));
         return;
     }
 
-    for (i = 0; op_toks[1][i]; i++)
+    for (i = 0; my_op_toks[1][i]; i++)
     {
-        if ((op_toks[1][i] == '-' && i == 0) || (op_toks[1][i] < '0' || op_toks[1][i] > '9'))
+        if ((my_op_toks[1][i] == '-' && i == 0) || (my_op_toks[1][i] < '0' || my_op_toks[1][i] > '9'))
         {
             set_my_op_tok_error(my_no_int_error(line_number));
             return;
         }
     }
-    new_node->num = atoi(op_toks[1]);
+    new_node->num = atoi(my_op_toks[1]);
 
     temp = (*my_stack)->next;
     new_node->prev = *my_stack;
