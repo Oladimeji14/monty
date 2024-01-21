@@ -1,5 +1,7 @@
 #include "monty.h"
 
+void my_pop(my_stack_t **my_stack, unsigned int line_number);
+
 void my_add_op(my_stack_t **my_stack, unsigned int line_number);
 void my_sub_op(my_stack_t **my_stack, unsigned int line_number);
 void my_div_op(my_stack_t **my_stack, unsigned int line_number);
