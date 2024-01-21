@@ -1,20 +1,20 @@
 #include "monty.h"
 
-void push(stack_t **s, unsigned int l);
-void print_all(stack_t **s, unsigned int l);
-void print_top(stack_t **s, unsigned int l);
-void pop(stack_t **s, unsigned int l);
-void swap(stack_t **s, unsigned int l);
+void my_push(my_stack_t **my_stack, unsigned int line_number);
+void my_print_all(my_stack_t **my_stack, unsigned int line_number);
+void my_print_top(my_stack_t **my_stack, unsigned int line_number);
+void my_pop(my_stack_t **my_stack, unsigned int line_number);
+void my_swap(my_stack_t **my_stack, unsigned int line_number);
 
-void push(stack_t **s, unsigned int l)
+void my_push(my_stack_t **my_stack, unsigned int line_number)
 {
-    stack_t *t, *new_s;
+    my_stack_t *temp, *new_node;
     int i;
 
-    new_s = malloc(sizeof(stack_t));
-    if (!new_s || !op_toks[1])
+    new_node = malloc(sizeof(my_stack_t));
+    if (!new_node || !op_toks[1])
     {
-        set_op_tok_error(!new_s ? malloc_error() : no_int_error(l));
+        set_my_op_tok_error(!new_node ? my_malloc_error() : my_no_int_error(line_number));
         return;
     }
 
@@ -22,70 +22,70 @@ void push(stack_t **s, unsigned int l)
     {
         if ((op_toks[1][i] == '-' && i == 0) || (op_toks[1][i] < '0' || op_toks[1][i] > '9'))
         {
-            set_op_tok_error(no_int_error(l));
+            set_my_op_tok_error(my_no_int_error(line_number));
             return;
         }
     }
-    new_s->n = atoi(op_toks[1]);
+    new_node->num = atoi(op_toks[1]);
 
-    t = (*s)->next;
-    new_s->prev = *s;
-    new_s->next = t;
-    if (t)
-        t->prev = new_s;
-    (*s)->next = new_s;
+    temp = (*my_stack)->next;
+    new_node->prev = *my_stack;
+    new_node->next = temp;
+    if (temp)
+        temp->prev = new_node;
+    (*my_stack)->next = new_node;
 }
 
-void print_all(stack_t **s, unsigned int l)
+void my_print_all(my_stack_t **my_stack, unsigned int line_number)
 {
-    stack_t *t = (*s)->next;
+    my_stack_t *temp = (*my_stack)->next;
 
-    while (t)
+    while (temp)
     {
-        printf("%d\n", t->n);
-        t = t->next;
+        printf("%d\n", temp->num);
+        temp = temp->next;
     }
-    (void)l;
+    (void)line_number;
 }
 
-void print_top(stack_t **s, unsigned int l)
+void my_print_top(my_stack_t **my_stack, unsigned int line_number)
 {
-    if ((*s)->next)
-        printf("%d\n", (*s)->next->n);
+    if ((*my_stack)->next)
+        printf("%d\n", (*my_stack)->next->num);
     else
-        set_op_tok_error(pint_error(l));
+        set_my_op_tok_error(my_pint_error(line_number));
 }
 
-void pop(stack_t **s, unsigned int l)
+void my_pop(my_stack_t **my_stack, unsigned int line_number)
 {
-    stack_t *n = (*s)->next->next;
+    my_stack_t *next_node = (*my_stack)->next->next;
 
-    if ((*s)->next)
+    if ((*my_stack)->next)
     {
-        free((*s)->next);
-        if (n)
-            n->prev = *s;
-        (*s)->next = n;
-    }
-    else
-        set_op_tok_error(pop_error(l));
-}
-
-void swap(stack_t **s, unsigned int l)
-{
-    stack_t *t;
-
-    if ((*s)->next && (*s)->next->next)
-    {
-        t = (*s)->next->next;
-        (*s)->next->next = t->next;
-        (*s)->next->prev = t;
-        if (t->next)
-            t->next->prev = (*s)->next;
-        t->next = (*s)->next;
-        t->prev = *s;
-        (*s)->next = t;
+        free((*my_stack)->next);
+        if (next_node)
+            next_node->prev = *my_stack;
+        (*my_stack)->next = next_node;
     }
     else
-        set_op_tok_error(short_stack_error(l, "swap"));
+        set_my_op_tok_error(my_pop_error(line_number));
+}
+
+void my_swap(my_stack_t **my_stack, unsigned int line_number)
+{
+    my_stack_t *temp;
+
+    if ((*my_stack)->next && (*my_stack)->next->next)
+    {
+        temp = (*my_stack)->next->next;
+        (*my_stack)->next->next = temp->next;
+        (*my_stack)->next->prev = temp;
+        if (temp->next)
+            temp->next->prev = (*my_stack)->next;
+        temp->next = (*my_stack)->next;
+        temp->prev = *my_stack;
+        (*my_stack)->next = temp;
+    }
+    else
+        set_my_op_tok_error(my_short_stack_error(line_number, "swap"));
 }

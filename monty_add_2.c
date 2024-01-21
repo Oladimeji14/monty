@@ -1,72 +1,72 @@
-#include "custom_monty.h"
+#include "monty.h"
 
-void add_op(stack_t **s, unsigned int ln);
-void sub_op(stack_t **s, unsigned int ln);
-void div_op(stack_t **s, unsigned int ln);
-void mul_op(stack_t **s, unsigned int ln);
-void mod_op(stack_t **s, unsigned int ln);
+void my_add_op(my_stack_t **my_stack, unsigned int line_number);
+void my_sub_op(my_stack_t **my_stack, unsigned int line_number);
+void my_div_op(my_stack_t **my_stack, unsigned int line_number);
+void my_mul_op(my_stack_t **my_stack, unsigned int line_number);
+void my_mod_op(my_stack_t **my_stack, unsigned int line_number);
 
-void add_op(stack_t **s, unsigned int ln)
+void my_add_op(my_stack_t **my_stack, unsigned int line_number)
 {
-	if ((*s)->next && (*s)->next->next)
-	{
-		(*s)->next->next->n += (*s)->next->n;
-		pop(s, ln);
-	}
-	else
-		set_op_tok_error(short_stack_error(ln, "add"));
+    if ((*my_stack)->next && (*my_stack)->next->next)
+    {
+        (*my_stack)->next->next->num += (*my_stack)->next->num;
+        my_pop(my_stack, line_number);
+    }
+    else
+        set_my_op_tok_error(my_short_stack_error(line_number, "add"));
 }
 
-void sub_op(stack_t **s, unsigned int ln)
+void my_sub_op(my_stack_t **my_stack, unsigned int line_number)
 {
-	if ((*s)->next && (*s)->next->next)
-	{
-		(*s)->next->next->n -= (*s)->next->n;
-		pop(s, ln);
-	}
-	else
-		set_op_tok_error(short_stack_error(ln, "sub"));
+    if ((*my_stack)->next && (*my_stack)->next->next)
+    {
+        (*my_stack)->next->next->num -= (*my_stack)->next->num;
+        my_pop(my_stack, line_number);
+    }
+    else
+        set_my_op_tok_error(my_short_stack_error(line_number, "sub"));
 }
 
-void div_op(stack_t **s, unsigned int ln)
+void my_div_op(my_stack_t **my_stack, unsigned int line_number)
 {
-	if ((*s)->next && (*s)->next->next)
-	{
-		if ((*s)->next->n == 0)
-		{
-			set_op_tok_error(div_error(ln));
-			return;
-		}
-		(*s)->next->next->n /= (*s)->next->n;
-		pop(s, ln);
-	}
-	else
-		set_op_tok_error(short_stack_error(ln, "div"));
+    if ((*my_stack)->next && (*my_stack)->next->next)
+    {
+        if ((*my_stack)->next->num == 0)
+        {
+            set_my_op_tok_error(my_div_error(line_number));
+            return;
+        }
+        (*my_stack)->next->next->num /= (*my_stack)->next->num;
+        my_pop(my_stack, line_number);
+    }
+    else
+        set_my_op_tok_error(my_short_stack_error(line_number, "div"));
 }
 
-void mul_op(stack_t **s, unsigned int ln)
+void my_mul_op(my_stack_t **my_stack, unsigned int line_number)
 {
-	if ((*s)->next && (*s)->next->next)
-	{
-		(*s)->next->next->n *= (*s)->next->n;
-		pop(s, ln);
-	}
-	else
-		set_op_tok_error(short_stack_error(ln, "mul"));
+    if ((*my_stack)->next && (*my_stack)->next->next)
+    {
+        (*my_stack)->next->next->num *= (*my_stack)->next->num;
+        my_pop(my_stack, line_number);
+    }
+    else
+        set_my_op_tok_error(my_short_stack_error(line_number, "mul"));
 }
 
-void mod_op(stack_t **s, unsigned int ln)
+void my_mod_op(my_stack_t **my_stack, unsigned int line_number)
 {
-	if ((*s)->next && (*s)->next->next)
-	{
-		if ((*s)->next->n == 0)
-		{
-			set_op_tok_error(div_error(ln));
-			return;
-		}
-		(*s)->next->next->n %= (*s)->next->n;
-		pop(s, ln);
-	}
-	else
-		set_op_tok_error(short_stack_error(ln, "mod"));
+    if ((*my_stack)->next && (*my_stack)->next->next)
+    {
+        if ((*my_stack)->next->num == 0)
+        {
+            set_my_op_tok_error(my_div_error(line_number));
+            return;
+        }
+        (*my_stack)->next->next->num %= (*my_stack)->next->num;
+        my_pop(my_stack, line_number);
+    }
+    else
+        set_my_op_tok_error(my_short_stack_error(line_number, "mod"));
 }

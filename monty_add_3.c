@@ -1,30 +1,30 @@
 #include "monty.h"
 
-void nop(stack_t **stack, unsigned int line);
-void pchar(stack_t **stack, unsigned int line);
-void pstr(stack_t **stack, unsigned int line);
+void my_nop(my_stack_t **my_stack, unsigned int line);
+void my_pchar(my_stack_t **my_stack, unsigned int line);
+void my_pstr(my_stack_t **my_stack, unsigned int line);
 
-void nop(stack_t **stack, unsigned int line) {
-    (void)stack;
+void my_nop(my_stack_t **my_stack, unsigned int line) {
+    (void)my_stack;
     (void)line;
 }
 
-void pchar(stack_t **stack, unsigned int line) {
-    if ((*stack)->next == NULL) {
-        set_op_tok_error(pchar_error(line, "stack empty"));
+void my_pchar(my_stack_t **my_stack, unsigned int line) {
+    if ((*my_stack)->next == NULL) {
+        set_my_op_tok_error(my_pchar_error(line, "stack empty"));
         return;
     }
-    if ((*stack)->next->n < 0 || (*stack)->next->n > 127) {
-        set_op_tok_error(pchar_error(line, "value out of range"));
+    if ((*my_stack)->next->num < 0 || (*my_stack)->next->num > 127) {
+        set_my_op_tok_error(my_pchar_error(line, "value out of range"));
         return;
     }
-    printf("%c\n", (*stack)->next->n);
+    printf("%c\n", (*my_stack)->next->num);
 }
 
-void pstr(stack_t **stack, unsigned int line) {
-    stack_t *tmp = (*stack)->next;
-    while (tmp && tmp->n != 0 && (tmp->n > 0 && tmp->n <= 127)) {
-        printf("%c", tmp->n);
+void my_pstr(my_stack_t **my_stack, unsigned int line) {
+    my_stack_t *tmp = (*my_stack)->next;
+    while (tmp && tmp->num != 0 && (tmp->num > 0 && tmp->num <= 127)) {
+        printf("%c", tmp->num);
         tmp = tmp->next;
     }
     printf("\n");
